@@ -19,6 +19,8 @@ public class Token {
                 return "Números de punto flotante (sin signo)";
             case 600:
                 return "Palabras reservadas";
+            case 900:
+                return "Error Léxico";
         }
         return "None";
     }

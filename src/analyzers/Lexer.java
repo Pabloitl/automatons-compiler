@@ -10,6 +10,10 @@ import tables.KeywordTable;
 import tables.SymbolTable;
 
 public class Lexer implements Iterator<Token>, AutoCloseable {
+    KeywordTable keywordsTable = KeywordTable.getInstance();
+    SymbolTable symbolsTable = SymbolTable.getInstance();
+    ErrorTable errorsTable = ErrorTable.getInstance();
+
     Scanner source;
 
     int state = 0;
@@ -53,6 +57,11 @@ public class Lexer implements Iterator<Token>, AutoCloseable {
                     if (isAlphaLower(c) || isNum(c)) {
                         state = 2;
                         ++end;
+                    } else if (isDelim(c)) {
+                        state = 17;
+                    } else {
+                        state = 16;
+                        ++end;
                     }
                     break;
                 case 2:
@@ -62,12 +71,15 @@ public class Lexer implements Iterator<Token>, AutoCloseable {
                     } else if (c == '_') {
                         state = 1;
                         ++end;
-                    } else {
+                    } else if (isDelim(c)) {
                         state = 3;
+                    } else {
+                        state = 16;
+                        ++end;
                     }
                     break;
                 case 3:
-                    SymbolTable.getInstance().addIdentifier(currentLine.substring(begin, end));
+                    symbolsTable.addIdentifier(currentLine.substring(begin, end));
                     return generateToken(300);
                 case 4:
                     if ('1' <= c && c <= '9') {
@@ -87,16 +99,22 @@ public class Lexer implements Iterator<Token>, AutoCloseable {
                     } else if (c == '.') {
                         state = 13;
                         ++end;
-                    } else {
+                    } else if (isDelim(c)) {
                         state = 12;
+                    } else {
+                        state = 16;
+                        ++end;
                     }
                     break;
                 case 6:
                     if (c == '.') {
                         state = 13;
                         ++end;
-                    } else {
+                    } else if (isDelim(c)) {
                         state = 12;
+                    } else {
+                        state = 16;
+                        ++end;
                     }
                     break;
                 case 7:
@@ -120,19 +138,31 @@ public class Lexer implements Iterator<Token>, AutoCloseable {
                     if (isAlphaLower(c)) {
                         state = 9;
                         ++end;
-                    } else {
+                    } else if (isDelim(c)) {
                         state = 11;
+                    } else {
+                        state = 16;
+                        ++end;
                     }
                     break;
                 case 10:
                     return generateToken((int) c);
                 case 11:
-                    return generateToken(KeywordTable.getInstance().getAttr(currentLine.substring(begin, end)));
+                    String lexeme = currentLine.substring(begin, end);
+
+                    if (keywordsTable.getAttr(lexeme) < 600)
+                        errorsTable.addError(lexeme);
+                    return generateToken(keywordsTable.getAttr(lexeme));
                 case 12:
                     return generateToken(400);
                 case 13:
                     if (isNum(c)) {
                         state = 14;
+                        ++end;
+                    } else if (isDelim(c)) {
+                        state = 17;
+                    } else {
+                        state = 16;
                         ++end;
                     }
                     break;
@@ -140,14 +170,25 @@ public class Lexer implements Iterator<Token>, AutoCloseable {
                     if (isNum(c)) {
                         state = 14;
                         ++end;
-                    } else {
+                    } else if (isDelim(c)) {
                         state = 15;
+                    } else {
+                        state = 16;
+                        ++end;
                     }
                     break;
                 case 15:
                     return generateToken(500);
                 case 16:
-                    ErrorTable.getInstance().addError(currentLine.substring(begin, end));
+                    if (isDelim(c)) {
+                        state = 17;
+                    } else {
+                        state = 16;
+                        ++end;
+                    }
+                    break;
+                case 17:
+                    errorsTable.addError(currentLine.substring(begin, end));
                     return generateToken(999);
             }
         }
@@ -197,6 +238,13 @@ public class Lexer implements Iterator<Token>, AutoCloseable {
 
     private static boolean isNum(char c) {
         return '0' <= c && c <= '9';
+    }
+
+    private static boolean isDelim(char c) {
+        return isChar(c)
+            || c == ' '
+            || c == '\t'
+            || c == '\n';
     }
 
     private static boolean isChar(char c) {
