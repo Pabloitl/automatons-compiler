@@ -1,7 +1,6 @@
 package tables;
 
-import java.util.LinkedList;
-import java.util.List;
+import utils.List;
 
 public class ErrorTable {
     private static ErrorTable instance;
@@ -9,7 +8,7 @@ public class ErrorTable {
     private List<String> errors;
 
     private ErrorTable() {
-        errors = new LinkedList<>();
+        errors = new List<>();
     }
 
     public static ErrorTable getInstance() {
@@ -27,7 +26,7 @@ public class ErrorTable {
     public String toString() {
         StringBuilder repr = new StringBuilder("«Tabla de errores»\n");
 
-        errors.stream()
+        errors
             .forEach(error -> repr.append(" ⋄ " + error + "\n"));
 
         return repr.toString();

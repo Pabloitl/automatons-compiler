@@ -1,7 +1,6 @@
 package tables;
 
-import java.util.LinkedList;
-import java.util.List;
+import utils.List;
 
 public class SymbolTable {
     private static SymbolTable instance;
@@ -9,7 +8,7 @@ public class SymbolTable {
     private List<String> symbols;
 
     private SymbolTable() {
-        symbols = new LinkedList<>();
+        symbols = new List<>();
     }
 
     public static SymbolTable getInstance() {
@@ -30,7 +29,7 @@ public class SymbolTable {
     public String toString() {
         StringBuilder repr = new StringBuilder("«Tabla de símbolos»\n");
 
-        symbols.stream()
+        symbols
             .forEach(symbol -> repr.append(" ⋄ " + symbol + "\n"));
 
         return repr.toString();
