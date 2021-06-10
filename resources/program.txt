@@ -1,13 +1,12 @@
-Programa ejemplo
+Programa mi_ejemplo
 Inicio
-    Real multiple, res;
-    Entero numero = 23;
+    Entero numero = 23, n = 07;
+    Real multiple, res = .17;
 
     Leer(num);
 
     multiple = 56 + (numero - num);
-    numero = multiple / 123.99;
-    res = numero + cuenta;
+    phi = sqrt(5);
 
     Escribir(res);
 Fin
