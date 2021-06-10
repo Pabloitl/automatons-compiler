@@ -1,6 +1,6 @@
 Programa mi_ejemplo
 Inicio
-    Entero numero = 23, n = 07;
+    Entero numero = 23, no = 07;
     Real multiple, res = .17;
 
     Leer(num);
