@@ -12,6 +12,7 @@ public class LexerMain {
         ErrorTable errorsTable = ErrorTable.getInstance();
 
         try (Lexer lex = new Lexer("resources/program.txt")) {
+            System.out.println("«Tabla Tokens»");
             while(lex.hasNext()) {
                 System.out.println( lex.next() );
             }

@@ -17,6 +17,7 @@ public class Lexer implements Iterator<Token>, AutoCloseable {
     Scanner source;
 
     int state = 0;
+    int line = 0;
     String currentLine;
 
     int begin = 0, end = 0;
@@ -24,8 +25,10 @@ public class Lexer implements Iterator<Token>, AutoCloseable {
     public Lexer(String file) throws FileNotFoundException {
         source = new Scanner(new File(file));
 
-        if (source.hasNextLine())
+        if (source.hasNextLine()) {
             currentLine = source.nextLine();
+            ++line;
+        }
         skipSpaces();
     }
 
@@ -41,7 +44,6 @@ public class Lexer implements Iterator<Token>, AutoCloseable {
 
 	@Override
 	public Token next() {
-
         while (true) {
             char c = (end == currentLine.length()) ? '\n' : currentLine.charAt(end);
             switch (state) {
@@ -151,7 +153,7 @@ public class Lexer implements Iterator<Token>, AutoCloseable {
                     String lexeme = currentLine.substring(begin, end);
 
                     if (keywordsTable.getAttr(lexeme) < 600)
-                        errorsTable.addError(lexeme);
+                        errorsTable.addError(line, lexeme);
                     return generateToken(keywordsTable.getAttr(lexeme));
                 case 12:
                     return generateToken(400);
@@ -188,7 +190,7 @@ public class Lexer implements Iterator<Token>, AutoCloseable {
                     }
                     break;
                 case 17:
-                    errorsTable.addError(currentLine.substring(begin, end));
+                    errorsTable.addError(line, currentLine.substring(begin, end));
                     return generateToken(999);
             }
         }
@@ -202,9 +204,10 @@ public class Lexer implements Iterator<Token>, AutoCloseable {
         }
 
         if (end == currentLine.length()) {
-            if (source.hasNextLine())
+            if (source.hasNextLine()) {
+                ++line;
                 currentLine = source.nextLine();
-            else currentLine = null;
+            } else currentLine = null;
 
             begin = end = 0;
             skipSpaces();

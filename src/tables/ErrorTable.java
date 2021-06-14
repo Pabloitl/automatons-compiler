@@ -18,8 +18,8 @@ public class ErrorTable {
         return instance;
     }
 
-    public void addError(String lexeme) {
-        errors.add(lexeme);
+    public void addError(int line, String lexeme) {
+        errors.add("Línea " + line + " → " + lexeme);
     }
 
     @Override
