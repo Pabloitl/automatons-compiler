@@ -81,7 +81,9 @@ public class Lexer implements Iterator<Token>, AutoCloseable {
                     }
                     break;
                 case 3:
-                    symbolsTable.addIdentifier(currentLine.substring(begin, end));
+                    String identifier = currentLine.substring(begin, end);
+
+                    symbolsTable.addIdentifier(identifier);
                     return generateToken(300);
                 case 4:
                     if ('1' <= c && c <= '9') {
@@ -148,12 +150,13 @@ public class Lexer implements Iterator<Token>, AutoCloseable {
                     }
                     break;
                 case 10:
-                    return generateToken((int) c);
+                    return generateToken((int) currentLine.charAt(begin));
                 case 11:
                     String lexeme = currentLine.substring(begin, end);
 
                     if (keywordsTable.getAttr(lexeme) < 600)
                         errorsTable.addError(line, lexeme);
+
                     return generateToken(keywordsTable.getAttr(lexeme));
                 case 12:
                     return generateToken(400);
@@ -190,7 +193,9 @@ public class Lexer implements Iterator<Token>, AutoCloseable {
                     }
                     break;
                 case 17:
-                    errorsTable.addError(line, currentLine.substring(begin, end));
+                    String error = currentLine.substring(begin, end);
+
+                    errorsTable.addError(line, error);
                     return generateToken(999);
             }
         }
@@ -215,12 +220,14 @@ public class Lexer implements Iterator<Token>, AutoCloseable {
     }
 
     private Token generateToken(int attr) {
+        String lexeme = currentLine.substring(begin, end);
+
         --end;
         begin = end;
         ++begin; ++end;
         state = 0;
         skipSpaces();
-        return new Token(attr);
+        return new Token(lexeme, attr);
     }
 
     private static boolean isAlphaNum(char c) {

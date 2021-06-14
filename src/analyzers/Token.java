@@ -2,9 +2,15 @@ package analyzers;
 
 public class Token {
     private int attr;
+    private String lexeme;
 
     public Token(int attr) {
         this.attr = attr;
+    }
+
+    public Token(String lexeme, int attr) {
+        this.attr = attr;
+        this.lexeme = lexeme;
     }
 
     public String getClassification() {
@@ -30,7 +36,8 @@ public class Token {
         StringBuilder repr = new StringBuilder("Token: ");
 
         repr.append("Atributo → (" + attr + ")\t");
-        repr.append("Clasificación → (" + getClassification() + ") ");
+        repr.append("Lexema → (" + lexeme + ") ");
+        repr.append("Clasificación → (" + getClassification() + ")");
 
         return repr.toString();
     }
