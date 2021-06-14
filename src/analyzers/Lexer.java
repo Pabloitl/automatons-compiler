@@ -61,6 +61,9 @@ public class Lexer implements Iterator<Token>, AutoCloseable {
                         ++end;
                     } else if (isDelim(c)) {
                         state = 17;
+                    } else if (c == '_') {
+                        state = 1;
+                        ++end;
                     } else {
                         state = 16;
                         ++end;
