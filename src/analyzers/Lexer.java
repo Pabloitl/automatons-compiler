@@ -233,10 +233,6 @@ public class Lexer implements Iterator<Token>, AutoCloseable {
         return new Token(lexeme, attr);
     }
 
-    private static boolean isAlphaNum(char c) {
-        return isAlpha(c) || isNum(c);
-    }
-
     private static boolean isAlpha(char c) {
         return isAlphaLower(c) || isAlphaUpper(c);
     }
