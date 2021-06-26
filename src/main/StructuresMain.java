@@ -5,7 +5,7 @@ import java.util.stream.IntStream;
 import tables.Tables;
 import utils.Stack;
 
-public class EstructuresMain {
+public class StructuresMain {
     public static void main (String[] args) {
         Tables tablas = null;
 
