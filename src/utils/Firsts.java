@@ -31,13 +31,13 @@ public class Firsts {
         HashSet<Entry> result = new HashSet<>();
 
         for (String[] prod : prods) {
-            int prodNum = tables.getProdNum(prod);
+            int prodNum = tables.getProdNum(nt, prod);
 
-            if (prod == null)
+            if (prod == null) {
                 result.add(new Entry(null, prodNum));
-            else if (tables.isTerminal(prod[0]))
+            } else if (tables.isTerminal(prod[0])) {
                 result.add(new Entry(prod[0], prodNum));
-            else {
+            } else {
                 HashSet<Entry> firstsProd = getFirst(prod[0], tables);
 
                 firstsProd.stream()
@@ -68,7 +68,7 @@ public class Firsts {
         return repr.toString();
     }
 
-    private class Entry {
+    public static class Entry {
         String symbol;
         int prodNum;
 
@@ -87,18 +87,18 @@ public class Firsts {
 
         @Override
         public boolean equals(Object obj) {
-            if (obj instanceof Firsts == false)
-                return false;
+            if (obj instanceof Firsts.Entry) {
+                if (symbol == ((Firsts.Entry) obj).symbol) return true;
 
-            System.out.println(symbol + " " + ((Firsts.Entry) obj).;
-            return symbol.equals(((Firsts.Entry) obj).getSymbol());
+                return symbol.equals(((Firsts.Entry) obj).getSymbol());
+            }
+
+            return false;
         }
 
         @Override
         public int hashCode() {
-            if (symbol == null) return 0;
-
-            return symbol.hashCode();
+            return (symbol == null) ? 0 : symbol.hashCode();
         }
 
         @Override

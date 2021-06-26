@@ -109,9 +109,9 @@ public class Tables {
         return nonTerminals;
     }
 
-    public int getProdNum(String[] right) {
+    public int getProdNum(String left, String[] right) {
         for (int i = 0; i < prodRight.length; ++i) {
-            if (right == prodRight[i])
+            if (right == prodRight[i] && left.equals(prodLeft[i]))
                 return i + 1;
         }
         return -1;
