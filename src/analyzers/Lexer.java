@@ -10,6 +10,8 @@ import tables.KeywordTable;
 import tables.SymbolTable;
 
 public class Lexer implements Iterator<Token>, AutoCloseable {
+    public final static String EOF = "\u001a";
+
     KeywordTable keywordsTable = KeywordTable.getInstance();
     SymbolTable symbolsTable = SymbolTable.getInstance();
     ErrorTable errorsTable = ErrorTable.getInstance();
@@ -44,6 +46,9 @@ public class Lexer implements Iterator<Token>, AutoCloseable {
 
 	@Override
 	public Token next() {
+        if (currentLine == null || end == currentLine.length())
+            return new Token(EOF, 1000);
+
         while (true) {
             char c = (end == currentLine.length()) ? '\n' : currentLine.charAt(end);
             switch (state) {

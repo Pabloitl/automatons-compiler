@@ -16,6 +16,8 @@ public class LexerMain {
             while(lex.hasNext()) {
                 System.out.println( lex.next() );
             }
+            System.out.println( lex.next() );
+            System.out.println( lex.next() );
         } catch (Exception e) {
             e.printStackTrace();
         }
