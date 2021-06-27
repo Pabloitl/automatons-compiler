@@ -46,7 +46,7 @@ public class Lexer implements Iterator<Token>, AutoCloseable {
 
 	@Override
 	public Token next() {
-        if (currentLine == null || end == currentLine.length())
+        if (!hasNext())
             return new Token(EOF, 1000);
 
         while (true) {
