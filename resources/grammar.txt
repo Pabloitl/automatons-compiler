@@ -1,7 +1,8 @@
 inicio      -> Programa program
 program     -> Inicio stmtlist Fin
-stmtlist    -> stmt
-stmtlist    -> stmt stmtlist
+stmtlist    -> stmt stmtf
+stmtf       -> stmt stmtf
+stmtf       -> ε
 stmt        -> tipo idlist ;
 stmt        -> id = expression ;
 stmt        -> Leer ( idlist ) ;

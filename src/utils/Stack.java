@@ -9,7 +9,7 @@ public class Stack<E> {
 
     public E top() {
         if (isEmpty())
-            throw new RuntimeException("Stack is empty");
+            return null;
 
         return head.element;
     }

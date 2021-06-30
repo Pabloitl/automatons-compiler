@@ -1,12 +1,12 @@
-Programa mi_ejemplo
+Programa
 Inicio
-    Entero numero = 23, no = 07;
-    Real multiple, res = .17;
+    Entero numero;
+    Real multiple, res;
 
     Leer(num);
 
     multiple = 56 + (numero - num);
-    phi = sqrt(5);
+    phi = 1245.9044;
 
     Escribir(res);
 Fin

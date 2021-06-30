@@ -36,6 +36,13 @@ public class KeywordTable {
         return index + OFFSET;
     }
 
+    public String getLexeme(int attr) {
+        if (attr < OFFSET || attr >= keywords.length + OFFSET)
+            return "";
+
+        return keywords[attr - OFFSET];
+    }
+
     @Override
     public String toString() {
         StringBuilder repr = new StringBuilder("«Tabla de palabras reservadas»\n");

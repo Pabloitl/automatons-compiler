@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.util.Iterator;
 import java.util.Scanner;
 
-import tables.ErrorTable;
 import tables.KeywordTable;
 import tables.SymbolTable;
 
@@ -14,7 +13,6 @@ public class Lexer implements Iterator<Token>, AutoCloseable {
 
     KeywordTable keywordsTable = KeywordTable.getInstance();
     SymbolTable symbolsTable = SymbolTable.getInstance();
-    ErrorTable errorsTable = ErrorTable.getInstance();
 
     Scanner source;
 
@@ -162,9 +160,6 @@ public class Lexer implements Iterator<Token>, AutoCloseable {
                 case 11:
                     String lexeme = currentLine.substring(begin, end);
 
-                    if (keywordsTable.getAttr(lexeme) < 600)
-                        errorsTable.addError(line, lexeme);
-
                     return generateToken(keywordsTable.getAttr(lexeme));
                 case 12:
                     return generateToken(400);
@@ -203,7 +198,6 @@ public class Lexer implements Iterator<Token>, AutoCloseable {
                 case 17:
                     String error = currentLine.substring(begin, end);
 
-                    errorsTable.addError(line, error);
                     return generateToken(999);
             }
         }

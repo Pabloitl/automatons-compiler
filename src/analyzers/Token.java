@@ -1,5 +1,7 @@
 package analyzers;
 
+import tables.KeywordTable;
+
 public class Token {
     private int attr;
     private String lexeme;
@@ -27,6 +29,26 @@ public class Token {
                 return "Palabras reservadas";
             case 900:
                 return "Error Léxico";
+        }
+        return "None";
+    }
+
+    public String toTerminal() {
+        switch (attr - attr % 100) {
+            case 0: case 100: case 200:
+                return ((char) attr) + "";
+            case 300:
+                return "id";
+            case 400:
+                return "intliteral";
+            case 500:
+                return "realliteral";
+            case 600:
+                return KeywordTable.getInstance().getLexeme(attr);
+            case 900:
+                return "error";
+            case 1000:
+                return "EOF";
         }
         return "None";
     }
