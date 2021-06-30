@@ -128,8 +128,7 @@ public class Tables {
         if (initialSymbol == null)
             initialSymbol = left;
 
-        if (Arrays.stream(right.split("\\s")).anyMatch(s -> left.equals(s)))
-            possibleS.put(left, 2);
+        Arrays.stream(right.split("\\s")).forEach(s -> possibleS.put(s, 2));
 
         possibleS.put(left, possibleS.getOrDefault(left, 0) + 1);
     }
