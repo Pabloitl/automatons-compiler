@@ -196,8 +196,6 @@ public class Lexer implements Iterator<Token>, AutoCloseable {
                     }
                     break;
                 case 17:
-                    String error = currentLine.substring(begin, end);
-
                     return generateToken(999);
             }
         }
@@ -230,10 +228,6 @@ public class Lexer implements Iterator<Token>, AutoCloseable {
         state = 0;
         skipSpaces();
         return new Token(lexeme, attr);
-    }
-
-    private static boolean isAlpha(char c) {
-        return isAlphaLower(c) || isAlphaUpper(c);
     }
 
     private static boolean isAlphaLower(char c) {

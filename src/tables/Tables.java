@@ -6,9 +6,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Set;
-import java.util.Map.Entry;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class Tables {
     private static int lookaheadMatrix[][] = {
@@ -17,16 +15,16 @@ public class Tables {
          */
          { 1, 0, 0,  0,  0,  0, 0,  0,  0, 0,  0,  0,  0,  0,  0,  0,  0,  0 },
          { 0, 2, 0,  0,  0,  0, 0,  0,  0, 0,  0,  0,  0,  0,  0,  0,  0,  0 },
-         { 1, 0, 0,  0,  3,  0, 3,  0,  0, 3,  0,  0,  0,  3,  3,  0,  0,  0 },
-         { 1, 0, 5,  0,  4,  0, 4,  0,  0, 4,  0,  0,  0,  4,  4,  0,  0,  0 },
-         { 1, 0, 0,  0,  7,  0, 8,  0,  0, 9,  0,  0,  0,  6,  6,  0,  0,  0 },
-         { 1, 0, 0,  0, 10,  0, 0,  0,  0, 0,  0,  0,  0,  0,  0,  0,  0,  0 },
-         { 1, 0, 0, 12,  0,  0, 0,  0, 12, 0, 11,  0,  0,  0,  0,  0,  0,  0 },
-         { 1, 0, 0,  0, 13,  0, 0,  0,  0, 0,  0, 13, 13,  0,  0,  0,  0,  0 },
-         { 1, 0, 0, 15,  0,  0, 0,  0, 15, 0,  0,  0,  0,  0,  0, 14, 14, 14 },
-         { 1, 0, 0, 15, 17,  0, 0, 16, 15, 0,  0, 18, 19,  0,  0,  0,  0,  0 },
-         { 1, 0, 0,  0,  0,  0, 0,  0,  0, 0,  0,  0,  0, 20, 21,  0,  0,  0 },
-         { 1, 0, 0,  0,  0,  0, 0,  0,  0, 0,  0,  0,  0,  0,  0, 22, 23, 24 }
+         { 0, 0, 0,  0,  3,  0, 3,  0,  0, 3,  0,  0,  0,  3,  3,  0,  0,  0 },
+         { 0, 0, 5,  0,  4,  0, 4,  0,  0, 4,  0,  0,  0,  4,  4,  0,  0,  0 },
+         { 0, 0, 0,  0,  7,  0, 8,  0,  0, 9,  0,  0,  0,  6,  6,  0,  0,  0 },
+         { 0, 0, 0,  0, 10,  0, 0,  0,  0, 0,  0,  0,  0,  0,  0,  0,  0,  0 },
+         { 0, 0, 0, 12,  0,  0, 0,  0, 12, 0, 11,  0,  0,  0,  0,  0,  0,  0 },
+         { 0, 0, 0,  0, 13,  0, 0,  0,  0, 0,  0, 13, 13,  0,  0,  0,  0,  0 },
+         { 0, 0, 0, 15,  0,  0, 0,  0, 15, 0,  0,  0,  0,  0,  0, 14, 14, 14 },
+         { 0, 0, 0, 15, 17,  0, 0, 16, 15, 0,  0, 18, 19,  0,  0,  0,  0,  0 },
+         { 0, 0, 0,  0,  0,  0, 0,  0,  0, 0,  0,  0,  0, 20, 21,  0,  0,  0 },
+         { 0, 0, 0,  0,  0,  0, 0,  0,  0, 0,  0,  0,  0,  0,  0, 22, 23, 24 }
     };
 
     private String terminals[], nonTerminals[];
@@ -171,9 +169,9 @@ public class Tables {
     public String toString() {
         StringBuilder repr = new StringBuilder();
 
-        repr.append("«Lados derechos de las producciones»\n");
-        Arrays.stream(prodRight)
-            .forEach(arr -> repr.append(Arrays.toString(arr) + "\n"));
+        repr.append("«Símbolos terminales»\n");
+        Arrays.stream(terminals)
+            .forEach(symbol -> repr.append(symbol + "\n"));
         repr.append("\n");
 
         repr.append("«Símbolos no terminales»\n");
@@ -181,9 +179,28 @@ public class Tables {
             .forEach(symbol -> repr.append(symbol + "\n"));
         repr.append("\n");
 
-        repr.append("«Símbolos terminales»\n");
+        repr.append("«Lados derechos de las producciones»\n");
+        Arrays.stream(prodRight)
+            .forEach(arr -> repr.append(Arrays.toString(arr) + "\n"));
+        repr.append("\n");
+
+        repr.append("«Matriz predictiva»\n\t");
         Arrays.stream(terminals)
-            .forEach(symbol -> repr.append(symbol + "\n"));
+            .forEach(symbol -> {
+                repr.append((symbol.length() > 1)
+                        ? " " + symbol.substring(0, 2)
+                        : "  " + symbol.charAt(0));
+            });
+        repr.append("\n");
+
+        IntStream.range(0, lookaheadMatrix.length)
+            .forEach(i -> {
+                repr.append(nonTerminals[i].substring(0, Math.min(nonTerminals[i].length(), 5)) + "\t");
+
+                Arrays.stream(lookaheadMatrix[i])
+                    .forEach(el -> repr.append(String.format("%3d", el)));
+                repr.append("\n");
+            });
 
         return repr.toString();
     }
