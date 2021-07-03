@@ -26,10 +26,10 @@ public class Syntax {
                     String[] rightProd = tables.getProdNum(tables.predict(x, a));
 
                     stack.pop();
-                    if (rightProd != null) {
+                    if (rightProd != null)
                         for (int i = rightProd.length - 1; i >= 0; --i)
                             stack.push(rightProd[i]);
-                    }
+
                     x = stack.top();
 
                     printStatus(x, a, stack);
@@ -48,6 +48,8 @@ public class Syntax {
                 }
             }
         }
+
+        if (a != "EOF") handleError();
     }
 
     private static void printStatus(String x, String a, Stack<String> stack) {
