@@ -1,6 +1,10 @@
 package analyzers;
 
+import java.util.Comparator;
+import java.util.HashMap;
+
 import tables.Tables;
+import tables.TokenTable;
 import utils.Stack;
 
 public class Syntax {
@@ -14,11 +18,14 @@ public class Syntax {
 
     public static void runLLDriver(Lexer lex, Tables tables) {
         Stack<String> stack = new Stack<>();
+        HashMap<String, Token> idCounts = new HashMap<>();
+        TokenTable tokenTable = TokenTable.getInstance();
 
         stack.push(tables.getInitialSymbol());
         String x = stack.top();
-        String a = lex.next().toTerminal();
-        printStatus(x, a, stack);
+        Token currentToken = lex.next();
+        String a = currentToken.toTerminal();
+        String modifier = "";
 
         while (!stack.isEmpty()) {
             if (tables.isNonTerminal(x)) {
@@ -31,8 +38,6 @@ public class Syntax {
                             stack.push(rightProd[i]);
 
                     x = stack.top();
-
-                    printStatus(x, a, stack);
                 } else {
                     handleError();
                 }
@@ -40,9 +45,37 @@ public class Syntax {
                 if (x.equals(a)) {
                     stack.pop();
                     x = stack.top();
-                    a = lex.next().toTerminal();
 
-                    printStatus(x, a, stack);
+                    if (a.equals("EOF")) continue;
+
+                    if (currentToken.getLexeme().equals("Entero") || currentToken.getLexeme().equals("Real"))
+                        modifier = currentToken.getLexeme();
+
+                    if (currentToken.getLexeme().equals(";"))
+                        modifier = "none";
+
+                    if (a.equals("id")) {
+                        if (idCounts.containsKey(currentToken.getLexeme())) {
+                            tokenTable.addToken(idCounts.get(currentToken.getLexeme()));
+                        } else {
+                            int count;
+                            if (idCounts.isEmpty()) {
+                                count = 300;
+                            }
+                            else {
+                                count = 1 + idCounts.values().stream().mapToInt(Token::getAttribute).max().getAsInt();
+                            }
+
+                            Token t = new Token(currentToken.getLexeme(), count, modifier);
+                            idCounts.put(t.getLexeme(), t);
+                            tokenTable.addToken(t);
+                        }
+                    } else {
+                        tokenTable.addToken(new Token(currentToken.getLexeme(), currentToken.getAttribute()));
+                    }
+
+                    currentToken = lex.next();
+                    a = currentToken.toTerminal();
                 } else {
                     handleError();
                 }
@@ -50,12 +83,6 @@ public class Syntax {
         }
 
         if (a != "EOF") handleError();
-    }
-
-    private static void printStatus(String x, String a, Stack<String> stack) {
-        System.out.println("a := " + a);
-        System.out.println("x := " + x);
-        System.out.println(stack);
     }
 
     private static void handleError() {

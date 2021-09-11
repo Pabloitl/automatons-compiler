@@ -5,14 +5,20 @@ import tables.KeywordTable;
 public class Token {
     private int attr;
     private String lexeme;
+    private String kind;
 
     public Token(int attr) {
         this.attr = attr;
     }
 
     public Token(String lexeme, int attr) {
-        this.attr = attr;
+        this(attr);
         this.lexeme = lexeme;
+    }
+
+    public Token(String lexeme, int attr, String kind) {
+        this(lexeme, attr);
+        this.kind = kind;
     }
 
     public String getClassification() {
@@ -22,15 +28,68 @@ public class Token {
             case 300:
                 return "Identificadores";
             case 400:
-                return "Números enteros (naturales)";
+                return "Números enteros";
             case 500:
-                return "Números de punto flotante (sin signo)";
+                return "Números de punto flotante";
             case 600:
                 return "Palabras reservadas";
             case 900:
                 return "Error Léxico";
         }
         return "None";
+    }
+
+    public String getKind() {
+        if (kind != null) return kind;
+
+        switch (lexeme) {
+
+        }
+
+        switch (attr) {
+            case ';':
+                return "Punto y coma";
+            case '=':
+                return "Igual";
+            case '+':
+                return "Más";
+            case '/':
+                return "Diagonal";
+            case '(':
+                return "Parentesis izquierdo";
+            case ')':
+                return "Parentesis derecho";
+            case ',':
+                return "Coma";
+            case '-':
+                return "Hyphen";
+            case 601:
+            case 602:
+                return "Tipo de dato";
+            case 600:
+            case 603:
+            case 604:
+            case 605:
+            case 606:
+                return "Función";
+        }
+
+        switch (attr - attr % 100) {
+            case 400:
+                return "Número entero";
+            case 500:
+                return "Número real";
+        }
+
+        return "Sin tipo";
+    }
+
+    public int getAttribute() {
+        return this.attr;
+    }
+
+    public String getLexeme() {
+        return this.lexeme;
     }
 
     public String toTerminal() {

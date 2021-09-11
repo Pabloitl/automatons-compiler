@@ -1,7 +1,7 @@
 Programa
 Inicio
-    Entero numero;
-    Real multiple, res;
+    Entero numero, num;
+    Real multiple, res, phi;
 
     Leer(num);
 
