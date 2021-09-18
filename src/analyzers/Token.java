@@ -69,9 +69,11 @@ public class Token {
             case 600:
             case 603:
             case 604:
-            case 605:
-            case 606:
                 return "Función";
+            case 605:
+                return "Inicial";
+            case 606:
+                return "Final";
         }
 
         switch (attr - attr % 100) {
