@@ -42,10 +42,6 @@ public class Token {
     public String getKind() {
         if (kind != null) return kind;
 
-        switch (lexeme) {
-
-        }
-
         switch (attr) {
             case ';':
                 return "Punto y coma";

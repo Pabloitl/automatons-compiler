@@ -1,16 +1,17 @@
 package tables;
 
-import utils.List;
+import java.util.ArrayList;
+import java.util.stream.Stream;
 
 import utils.Token;
 
 public class TokenTable {
     private static TokenTable instance;
 
-    private List<Token> tokens;
+    private ArrayList<Token> tokens;
 
     private TokenTable() {
-        tokens = new List<>();
+        tokens = new ArrayList<>();
     }
 
     public static TokenTable getInstance() {
@@ -22,6 +23,10 @@ public class TokenTable {
 
     public void addToken(Token token) {
         tokens.add(token);
+    }
+
+    public Stream<Token> stream() {
+        return tokens.stream();
     }
 
     @Override

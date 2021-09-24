@@ -88,9 +88,9 @@ public class Lexer implements Iterator<Token>, AutoCloseable {
                     }
                     break;
                 case 3:
-                    String identifier = currentLine.substring(begin, end);
+                    // String identifier = currentLine.substring(begin, end);
 
-                    symbolsTable.addIdentifier(identifier);
+                    // symbolsTable.addIdentifier(identifier);
                     return generateToken(300);
                 case 4:
                     if ('1' <= c && c <= '9') {
@@ -201,6 +201,10 @@ public class Lexer implements Iterator<Token>, AutoCloseable {
             }
         }
 	}
+
+    public int getLineNumber() {
+        return line;
+    }
 
     private void skipSpaces() {
         if (currentLine == null) return;
