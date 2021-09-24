@@ -1,4 +1,4 @@
-package analyzers;
+package utils;
 
 import tables.KeywordTable;
 

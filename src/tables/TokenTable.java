@@ -2,7 +2,7 @@ package tables;
 
 import utils.List;
 
-import analyzers.Token;
+import utils.Token;
 
 public class TokenTable {
     private static TokenTable instance;

@@ -1,11 +1,11 @@
 package analyzers;
 
-import java.util.Comparator;
 import java.util.HashMap;
 
 import tables.Tables;
 import tables.TokenTable;
 import utils.Stack;
+import utils.Token;
 
 public class Syntax {
     public static void runLLDriver(String sourceFile, Tables tables) {

@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import tables.KeywordTable;
 import tables.SymbolTable;
+import utils.Token;
 
 public class Lexer implements Iterator<Token>, AutoCloseable {
     public final static String EOF = "\u001a";
