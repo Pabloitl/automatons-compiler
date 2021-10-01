@@ -44,7 +44,13 @@ public class Symbol {
         StringBuffer repr = new StringBuffer();
         repr.append(String.format("%10s", this.lexeme) + "\t");
         repr.append(String.format("%26s", this.classification) + "\t");
-        repr.append(String.format("%14s", this.kind) + "\t");
+
+        if (this.kind.equals("Número entero"))
+            repr.append(String.format("%14s\t", "Entero"));
+        else if (this.kind.equals("Número real"))
+            repr.append(String.format("%14s\t", "Real"));
+        else
+            repr.append(String.format("%14s", this.kind) + "\t");
 
         if (this.kind.equals("Número real"))
             repr.append(String.format("%10s", this.floatvalue) + "\t");
