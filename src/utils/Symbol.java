@@ -39,6 +39,18 @@ public class Symbol {
         return lexeme;
     }
 
+    public String getKind() {
+        return kind;
+    }
+
+    public double getValue() {
+        return this.intvalue + this.floatvalue;
+    }
+
+    public int getRepetitions() {
+        return lines.size();
+    }
+
     @Override
     public String toString() {
         StringBuffer repr = new StringBuffer();

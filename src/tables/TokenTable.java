@@ -1,6 +1,8 @@
 package tables;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.stream.Stream;
 
 import utils.Token;
@@ -29,6 +31,10 @@ public class TokenTable {
         return tokens.stream();
     }
 
+    public List<Token> getAsList() {
+        return List.copyOf(tokens);
+    }
+
     @Override
     public String toString() {
         StringBuilder repr = new StringBuilder("«Tabla de Tokens»\n");
@@ -39,7 +45,8 @@ public class TokenTable {
                     String.format("%12s", token.getLexeme())+ "\t"
                     + String.format("%30s", token.getClassification()) + "\t"
                     + String.format("%22s", token.getKind()) + "\t"
-                    + String.format("%3s", token.getAttribute()) + "\n"));;
+                    + String.format("%3s", token.getAttribute()) + "\t"
+                    + String.format("%3s", token.getLine()) + "\n"));
 
         return repr.toString();
     }

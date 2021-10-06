@@ -6,6 +6,7 @@ public class Token {
     private int attr;
     private String lexeme;
     private String kind;
+    private int line;
 
     public Token(int attr) {
         this.attr = attr;
@@ -16,8 +17,19 @@ public class Token {
         this.lexeme = lexeme;
     }
 
+    public Token(String lexeme, int attr, int line) {
+        this(lexeme, attr);
+        this.line = line;
+
+    }
+
     public Token(String lexeme, int attr, String kind) {
         this(lexeme, attr);
+        this.kind = kind;
+    }
+
+    public Token(String lexeme, int attr, String kind, int line) {
+        this(lexeme, attr, line);
         this.kind = kind;
     }
 
@@ -88,6 +100,10 @@ public class Token {
 
     public String getLexeme() {
         return this.lexeme;
+    }
+
+    public int getLine() {
+        return line;
     }
 
     public String toTerminal() {

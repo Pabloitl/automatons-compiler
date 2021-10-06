@@ -1,6 +1,7 @@
 package tables;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import utils.Symbol;
 import utils.Token;
@@ -40,6 +41,12 @@ public class SymbolTable {
             .findFirst()
             .orElseThrow()
             .seenInLine(lineNumber);
+    }
+
+    public Symbol search(String lexeme) {
+        return symbols.stream()
+            .filter(s -> s.getLexeme().equals(lexeme))
+            .findFirst().orElseThrow();
     }
 
     @Override
