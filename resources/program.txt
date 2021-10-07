@@ -5,7 +5,7 @@ Inicio
 
     Leer(num);
 
-    myvar = 56 + (numero - num);
+    num = 56 + (numero - num);
     phi = 1245.9044 / 2.4;
 
     Escribir(res);

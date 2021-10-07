@@ -2,13 +2,14 @@ package utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Symbol {
     String lexeme;
     String classification;
     String kind;
-    int intvalue;
-    float floatvalue;
+    public int intvalue;
+    public float floatvalue;
     ArrayList<Integer> lines;
 
     public Symbol() {
@@ -31,6 +32,17 @@ public class Symbol {
             throw new RuntimeException("Can't resolve value");
     }
 
+    public Symbol(Symbol s) {
+        this();
+
+        this.lexeme = s.lexeme;
+        this.classification = s.classification;
+        this.kind = s.kind;
+        this.intvalue = s.intvalue;
+        this.floatvalue = s.floatvalue;
+        this.lines = new ArrayList<>(List.of(s.getLines()));
+    }
+
     public void seenInLine(int lineNumber) {
         lines.add(lineNumber);
     }
@@ -39,12 +51,23 @@ public class Symbol {
         return lexeme;
     }
 
+    public String getClassification() {
+        return this.classification;
+    }
+
     public String getKind() {
         return kind;
     }
 
     public double getValue() {
-        return this.intvalue + this.floatvalue;
+        if (this.kind.equals("Número entero"))
+            return this.intvalue;
+        else
+            return this.floatvalue;
+    }
+
+    public Integer[] getLines() {
+        return lines.toArray(Integer[]::new);
     }
 
     public int getRepetitions() {

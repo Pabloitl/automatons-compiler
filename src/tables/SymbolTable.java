@@ -2,6 +2,7 @@ package tables;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import utils.Symbol;
 import utils.Token;
@@ -47,6 +48,10 @@ public class SymbolTable {
         return symbols.stream()
             .filter(s -> s.getLexeme().equals(lexeme))
             .findFirst().orElseThrow();
+    }
+
+    public Stream<Symbol> stream() {
+        return symbols.stream();
     }
 
     @Override
