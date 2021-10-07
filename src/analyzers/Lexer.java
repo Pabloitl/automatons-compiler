@@ -88,9 +88,6 @@ public class Lexer implements Iterator<Token>, AutoCloseable {
                     }
                     break;
                 case 3:
-                    // String identifier = currentLine.substring(begin, end);
-
-                    // symbolsTable.addIdentifier(identifier);
                     return generateToken(300);
                 case 4:
                     if ('1' <= c && c <= '9') {
@@ -232,7 +229,7 @@ public class Lexer implements Iterator<Token>, AutoCloseable {
         ++begin; ++end;
         state = 0;
         skipSpaces();
-        return new Token(lexeme, attr);
+        return new Token(lexeme, attr, line);
     }
 
     private static boolean isAlphaLower(char c) {

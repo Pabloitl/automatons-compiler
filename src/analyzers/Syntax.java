@@ -46,6 +46,7 @@ public class Syntax {
                     stack.pop();
                     x = stack.top();
 
+                    // End driver
                     if (a.equals("EOF")) continue;
 
                     if (currentToken.getLexeme().equals("Entero") || currentToken.getLexeme().equals("Real"))
@@ -66,13 +67,14 @@ public class Syntax {
                                 count = 1 + idCounts.values().stream().mapToInt(Token::getAttribute).max().getAsInt();
                             }
 
-                            Token t = new Token(currentToken.getLexeme(), count, modifier);
+                            Token t = new Token(currentToken.getLexeme(), count, modifier, currentToken.getLine());
                             idCounts.put(t.getLexeme(), t);
                             tokenTable.addToken(t);
                         }
                     } else {
-                        tokenTable.addToken(new Token(currentToken.getLexeme(), currentToken.getAttribute()));
+                        tokenTable.addToken(new Token(currentToken.getLexeme(), currentToken.getAttribute(), currentToken.getLine()));
                     }
+                    // Continue lldriver
 
                     currentToken = lex.next();
                     a = currentToken.toTerminal();

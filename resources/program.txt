@@ -5,8 +5,8 @@ Inicio
 
     Leer(num);
 
-    multiple = 56 + (numero - num);
-    phi = 1245.9044;
+    num = 56 + (numero - num);
+    phi = 1245.9044 / 2.4;
 
     Escribir(res);
 Fin
