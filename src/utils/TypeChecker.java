@@ -3,6 +3,7 @@ package utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import tables.ExpressionTable;
 import tables.TokenTable;
 import trees.ExpressionTree;
 
@@ -16,6 +17,7 @@ public class TypeChecker {
         for (Token token : tokens.getAsList()) {
             if (expr != null && token.toTerminal().equals(";")) {
                 expr.constructFrom(expression);
+                ExpressionTable.getInstance().insertExpression(expr.getInPostOrder());
                 if (expr.checkTypes() == false)
                     return;
 

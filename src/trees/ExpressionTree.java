@@ -1,5 +1,6 @@
 package trees;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
@@ -152,23 +153,23 @@ public class ExpressionTree {
         inorderTraversal(root.getRight(), repr);
     }
 
-    private void preorderTraversal(Node root, StringBuilder repr) {
-        if (root == null) return;
-
-        repr.append(root.getName() + " ");
-        preorderTraversal(root.getLeft(), repr);
-        preorderTraversal(root.getRight(), repr);
+    public ArrayList<Node> getInPostOrder() {
+        return getInPostOrder(root);
     }
 
-    private void postorderTraversal(Node root, StringBuilder repr) {
-        if (root == null) return;
+    public ArrayList<Node> getInPostOrder(Node root) {
+        if (root == null) return new ArrayList<>();
 
-        postorderTraversal(root.getLeft(), repr);
-        postorderTraversal(root.getRight(), repr);
-        repr.append(root.getName() + " ");
+        ArrayList<Node> res = new ArrayList<>();
+
+        res = getInPostOrder(root.getLeft());
+        res.addAll(getInPostOrder(root.getRight()));
+        res.add(root);
+
+        return res;
     }
 
-    private class Node {
+    public class Node {
         String nombre;
         String tipo;
         double valorIdentificacion;
