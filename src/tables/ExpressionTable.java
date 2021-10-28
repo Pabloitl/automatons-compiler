@@ -24,6 +24,10 @@ public class ExpressionTable {
         expressions.add(new Expression(expr));
     }
 
+    public ArrayList<Expression> getAsList() {
+        return this.expressions;
+    }
+
     @Override
     public String toString() {
         StringBuilder repr = new StringBuilder("« Tabla de expresiones »\n");
@@ -39,6 +43,10 @@ public class ExpressionTable {
 
         public Expression(ArrayList<ExpressionTree.Node> expression) {
             this.expression = expression;
+        }
+
+        public ArrayList<ExpressionTree.Node> getAsList() {
+            return expression;
         }
 
         @Override

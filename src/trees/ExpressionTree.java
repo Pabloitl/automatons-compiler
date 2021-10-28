@@ -169,7 +169,7 @@ public class ExpressionTree {
         return res;
     }
 
-    public class Node {
+    public static class Node {
         String nombre;
         String tipo;
         double valorIdentificacion;
@@ -178,6 +178,10 @@ public class ExpressionTree {
         float valor;
 
         Node left, right;
+
+        public Node(String name) {
+            this.nombre = name;
+        }
 
         public Node(Token token) {
             SymbolTable symbols = SymbolTable.getInstance();
