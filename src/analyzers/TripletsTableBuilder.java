@@ -18,7 +18,6 @@ public class TripletsTableBuilder {
     }
 
     private static void toTriplet(ExpressionTable.Expression expr) {
-        System.out.println(">>>> " + expr.toString());
         ArrayList<ExpressionTree.Node> expression = expr.getAsList();
 
         int i = 0;
