@@ -3,11 +3,8 @@ Inicio
     Entero numero, num;
     Real multiple, res, phi;
 
-    num = 56 + (numero - num);
-    phi = 1245.9044 / 2.4;
+    num = 5 + 10;
+    num = 5 + 10;
 
-    multiple = res + phi;
-    num = 27;
-
-    res = 5.5 / (res - phi);
+    Escribir(num);
 Fin

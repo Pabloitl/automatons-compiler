@@ -9,6 +9,18 @@ public class Triplet {
         this.secondArgument = arg2;
     }
 
+    public String getOperation() {
+        return this.operation;
+    }
+
+    public String getFirst() {
+        return this.firstArgument;
+    }
+
+    public String getSecond() {
+        return this.secondArgument;
+    }
+
     @Override
     public String toString() {
         StringBuilder repr = new StringBuilder();

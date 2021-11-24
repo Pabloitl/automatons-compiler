@@ -23,7 +23,22 @@ public class ExpressionTree {
         root.setLeft(new Node(tokens.get(0)));
     }
 
+    public void putRead(Token token) {
+        root = new Node(new Token("Leer", -1));
+        root.setRight(new Node(new Token("", -1)));
+        root.setLeft(new Node(token));
+    }
+
+    public void putWrite() {
+        root = new Node(new Token("Escribir", -1));
+        root.left = new Node(new Token("Ignore", -1));
+    }
+
     public void constructFrom(List<Token> tokens) {
+        if (tokens.size() == 2 && tokens.get(0).getLexeme().equals("Leer")) {
+            putRead(tokens.get(1)); return;
+        }
+
         Stack<Node> stN = new Stack<>();
         Stack<Token> stC = new Stack<>();
 
@@ -102,6 +117,9 @@ public class ExpressionTree {
     }
 
     public String checkTypes(Node root) {
+        if (root.getName().equals("Escribir")) {
+            return checkTypes(root.right);
+        }
         if (root.getLeft() == null && root.getRight() == null)
             return root.tipo;
 

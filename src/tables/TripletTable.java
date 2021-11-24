@@ -2,6 +2,10 @@ package tables;
 
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import utils.Triplet;
 
@@ -23,7 +27,37 @@ public class TripletTable {
         return instance;
     }
 
+    public ArrayList<Triplet> asList() {
+        return instructions;
+    }
+
+    public void deleteTriplets(List<Integer> toRemove) {
+        int remove[] = toRemove.stream()
+            .mapToInt(i -> i)
+            .sorted()
+            .distinct()
+            .toArray();
+
+        for (int i = remove.length - 1; i >= 0; --i) {
+            int index = remove[i];
+
+            if (index >= instructions.size()) continue;
+
+            instructions.remove(index);
+        }
+    }
+
     public String addOperation(String op, String t1, String t2) {
+        if (op.equals("Leer")) {
+            instructions.add(new Triplet(op, t1, ""));
+            return "";
+        }
+
+        if (op.equals("Escribir")) {
+            instructions.add(new Triplet(op, t2, ""));
+            return "";
+        }
+
         if (!op.equals("=")) {
             instructions.add(new Triplet("=", "t" + variablesCount, t1));
             instructions.add(new Triplet(op, "t" + variablesCount, t2));

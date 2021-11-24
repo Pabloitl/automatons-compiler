@@ -47,6 +47,8 @@ public class TripletsTableBuilder {
             case "-":
             case "/":
             case "=":
+            case "Leer":
+            case "Escribir":
                 return true;
         }
 

@@ -14,7 +14,31 @@ public class TypeChecker {
         ExpressionTree expr = null;
         List<Token> expression = new ArrayList<>();
 
+        boolean reading = false;
+
         for (Token token : tokens.getAsList()) {
+            if (token.getLexeme().equals("Leer"))
+                reading = true;
+
+            if (token.getLexeme().equals("Escribir")) {
+                expr = new ExpressionTree();
+
+                expr.putWrite();
+            }
+
+            if (token.toTerminal().equals(";"))
+                reading = false;
+
+            if (reading && token.toTerminal().equals("id")) {
+                Token action = new Token("Leer", -1);
+                expr = new ExpressionTree();
+
+                expr.constructFrom(List.of(action, token));
+                ExpressionTable.getInstance().insertExpression(expr.getInPostOrder());
+
+                expr = null;
+            }
+
             if (expr != null && token.toTerminal().equals(";")) {
                 expr.constructFrom(expression);
                 ExpressionTable.getInstance().insertExpression(expr.getInPostOrder());
