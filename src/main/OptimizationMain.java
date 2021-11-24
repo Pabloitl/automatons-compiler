@@ -25,6 +25,7 @@ public class OptimizationMain {
 
         Optimizer.optimize();
         System.out.println(triplets);
+        triplets.writeToFile("resources/codigo_optimizado.txt");
 
         if (errors.isEmpty() == false)
             System.err.println(errors);
