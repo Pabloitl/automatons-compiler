@@ -1,10 +1,12 @@
 Programa
 Inicio
-    Entero numero, num;
-    Real multiple, res, phi;
+    Entero var, num, no;
 
-    num = 5 + 10;
-    num = 5 + 10;
+    Leer(no);
 
+    no = 5 + 10;
+    num = no + 0;
+
+    Escribir(no);
     Escribir(num);
 Fin

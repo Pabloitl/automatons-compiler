@@ -82,23 +82,17 @@ public class Optimizer {
             switch (op) {
                 case "/":
                     if (arg == 1) {
-                        toRemove.add(i - 1);
                         toRemove.add(i);
-                        toRemove.add(i + 1);
                     }
                     break;
                 case "+":
                     if (arg == 0) {
-                        toRemove.add(i - 1);
                         toRemove.add(i);
-                        toRemove.add(i + 1);
                     }
                     break;
                 case "-":
                     if (arg == 0) {
-                        toRemove.add(i - 1);
                         toRemove.add(i);
-                        toRemove.add(i + 1);
                     }
                     break;
             }

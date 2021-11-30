@@ -3,14 +3,15 @@ package main;
 import analyzers.SymbolTableBuilder;
 import analyzers.Syntax;
 import analyzers.TripletsTableBuilder;
-import tables.AbstractSintacticTree;
+import object.ObjectTranslator;
+import optimization.Optimizer;
 import tables.ErrorTable;
-import tables.ExpressionTable;
 import tables.Tables;
 import tables.TripletTable;
 import utils.TypeChecker;
 
-public class ObjectCodeMain {
+public class ObjectMain {
+
     public static void main(String[] args) throws Exception {
         Tables tables = new Tables("resources/grammar.txt");
         ErrorTable errors = ErrorTable.getInstance();
@@ -22,11 +23,15 @@ public class ObjectCodeMain {
         TypeChecker.check();
 
         TripletsTableBuilder.build();
-
-        System.out.println(triplets);
         triplets.writeToFile("resources/codigo_intermedio.txt");
+
+        Optimizer.optimize();
+        triplets.writeToFile("resources/codigo_optimizado.txt");
+
+        ObjectTranslator.translate("resources/object.ens");
 
         if (errors.isEmpty() == false)
             System.err.println(errors);
     }
+
 }
